@@ -9,11 +9,7 @@ const ACTIONS = {
   ERROR: "error",
 };
 
-const initialState = {
-  jobs: [],
-  loading: true,
-};
-
+// const initialState =
 const reducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.MAKE_REQUEST:
@@ -36,7 +32,10 @@ const reducer = (state, action) => {
 };
 
 export default function useFetchJobs(params, pageNumber) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, {
+    jobs: [],
+    loading: true,
+  });
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
@@ -48,7 +47,8 @@ export default function useFetchJobs(params, pageNumber) {
         params: { markdown: true, page: pageNumber, ...params },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);'
+        console.log(res.data);
         dispatch({ type: ACTIONS.GET_DATA, payload: { jobs: res.data } });
       })
       .catch((e) => {
